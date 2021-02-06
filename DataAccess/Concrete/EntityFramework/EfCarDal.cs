@@ -33,7 +33,6 @@ namespace DataAccess.Concrete.EntityFramework
 
         public List<Car> GetAll(Expression<Func<Car, bool>> filter = null)
         {
-            Console.WriteLine("Tüm arabalar");
             using (ReCapProjectContext context = new ReCapProjectContext())
             {
                 return filter == null ? context.Set<Car>().ToList() : context.Set<Car>().Where(filter).ToList();
