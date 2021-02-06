@@ -2,38 +2,34 @@
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace DataAccess.Concrete.InMemory
 {
     public class InMemoryCarDal : ICarDal
     {
-        public void Add()
+        public void Add(Car entity)
         {
             Console.WriteLine("Eklendi");
         }
 
-        public void Delete()
+        public void Delete(Car entity)
         {
             Console.WriteLine("Silindi");
         }
 
-        public void GetById()
+        public List<Car> GetAll(Expression<Func<Car, bool>> filter = null)
         {
-            Console.WriteLine("ID ile Getirildi");
+            throw new NotImplementedException();
         }
 
-        public void GetAll()
-        {
-            Console.WriteLine("Hepsi Getirildi");
-        }
-
-        public void Update()
+        public void Update(Car entity)
         {
             Console.WriteLine("Güncellendi");
         }
 
-        List<Car> ICarDal.GetAll()
+        List<Car> IEntityRepository<Car>.GetById()
         {
             throw new NotImplementedException();
         }
