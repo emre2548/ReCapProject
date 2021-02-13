@@ -1,10 +1,12 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Business.Constant;
 
 namespace Business.Concrete
 {
@@ -18,34 +20,35 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        public void Add(Car car)
+        public IResult Add(Car car)
         {
-            if (car.DailyPrice > 0)
+            if (car.DailyPrice < 0)
             {
-                _carDal.Add(car);
+                return new SuccessDataResult(Message.CarInvalidDailyPrice);
             }
-            else
-            {
-                Console.WriteLine("Günlük kiralama süresi 0'dan büyük olmalıdır");
-            }
+  
+            return new SuccessDataResult(Message.CarValidDailyPrice);
+            
+
+            //_carDal.Add(car);
         }
 
-        public List<Car> GetAll()
+        public IDataResult<List<Car>> GetAll()
         {
             return _carDal.GetAll();
         }
 
-        public List<CarDetailDto> GetCarDetails()
+        public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
             return _carDal.GetCarDetails();
         }
 
-        public List<Car> GetCarsByBrandId(int id)
+        public IDataResult<List<Car>> GetCarsByBrandId(int id)
         {
             return _carDal.GetAll(p => p.BrandId == id);
         }
 
-        public List<Car> GetCarsByColorId(int id)
+        public IDataResult<List<Car>> GetCarsByColorId(int id)
         {
             return _carDal.GetAll(p => p.ColorId == id);
         }
