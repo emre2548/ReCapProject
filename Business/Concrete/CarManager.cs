@@ -24,10 +24,10 @@ namespace Business.Concrete
         {
             if (car.DailyPrice < 0)
             {
-                return new SuccessDataResult(Message.CarInvalidDailyPrice);
+                return new ErrorResult(Message.CarInvalidDailyPrice);
             }
   
-            return new SuccessDataResult(Message.CarValidDailyPrice);
+            return new SuccessResult(Message.CarValidDailyPrice);
             
 
             //_carDal.Add(car);
@@ -35,22 +35,22 @@ namespace Business.Concrete
 
         public IDataResult<List<Car>> GetAll()
         {
-            return _carDal.GetAll();
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(),Message.CarListed);
         }
 
         public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
-            return _carDal.GetCarDetails();
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(),Message.CarDetailListed);
         }
 
         public IDataResult<List<Car>> GetCarsByBrandId(int id)
         {
-            return _carDal.GetAll(p => p.BrandId == id);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.BrandId == id));
         }
 
         public IDataResult<List<Car>> GetCarsByColorId(int id)
         {
-            return _carDal.GetAll(p => p.ColorId == id);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.ColorId == id));
         }
 
         List<Car> ICarService.GetCarDetails()
